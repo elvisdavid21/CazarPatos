@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.epnfis.cazarpatos.R
 
 class RankingAdapter(private val dataSet: ArrayList<Jugador>) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
     private val TYPE_HEADER : Int = 0

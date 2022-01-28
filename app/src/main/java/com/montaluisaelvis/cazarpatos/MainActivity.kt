@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.os.Looper
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.epnfis.cazarpatos.R
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -45,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             textViewContador.setText(contador.toString())
             imageViewPato.setImageResource(R.drawable.duck_clicked)
             //Evento que se ejecuta luego de 500 milisegundos
-            Handler().postDelayed(Runnable {
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
                 imageViewPato.setImageResource(R.drawable.duck)
                 moverPato()
             }, 500)

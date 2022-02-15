@@ -4,6 +4,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 //import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -11,6 +12,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.epnfis.cazarpatos.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
     lateinit var manejadorArchivo: FileHandler
@@ -21,13 +25,14 @@ class LoginActivity : AppCompatActivity() {
     lateinit var checkBoxRecordarme: CheckBox
     lateinit var mediaPlayer: MediaPlayer
     private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         //Inicialización de variables
-        manejadorArchivo = SharedPreferencesManager(this)
-        manejadorArchivo = EncriptedSharedPreferencesManager(this)
-        manejadorArchivo = FileExternalManager(this)
+        //manejadorArchivo = SharedPreferencesManager(this)
+        //manejadorArchivo = EncriptedSharedPreferencesManager(this)
+        //manejadorArchivo = FileExternalManager(this)
         // Initialize Firebase Auth
         auth = Firebase.auth
 
@@ -64,11 +69,13 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    var intent = Intent(this,PrincipalActivity::class.java)
+                    Log.d(EXTRA_LOGIN, "SingInWhitEmail: success")
+                    var intent = Intent(this,MainActivity::class.java)
                     intent.putExtra(LOGIN_KEY,auth.currentUser!!.email)
                     startActivity(intent)
-                    finish()
+                    //finish()
                 } else {
+                    Log.d(EXTRA_LOGIN, "SingInWhitEmail: failure", task.exception)
                     Toast.makeText(baseContext, task.exception!!.message,
                         Toast.LENGTH_SHORT).show()
                 }
